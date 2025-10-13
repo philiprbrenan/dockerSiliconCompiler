@@ -1,4 +1,4 @@
-# Test 2025-10-13 at 23:50:41
+# Test 2025-10-13 at 23:52:30
 
 name: Test
 run-name: dockerSiliconCompiler
@@ -28,3 +28,7 @@ jobs:
         pip install --upgrade siliconcompiler                                   # Install SiliconCompiler in venv
         pip show siliconcompiler                                                # Display SiliconCompiler package information
         python3 -c "import siliconcompiler;print(siliconcompiler.__version__)"  # Check version
+
+    - name: 'Install tools for ASIC flow as described in: https://docs.siliconcompiler.com/en/latest/reference_manual/apps.html#app-sc-install'
+      run: |
+        sc-install -group asic
