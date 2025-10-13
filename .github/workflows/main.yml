@@ -1,4 +1,4 @@
-# Test 2025-10-13 at 23:48:42
+# Test 2025-10-13 at 23:49:48
 
 name: Test
 run-name: dockerSiliconCompiler
@@ -19,7 +19,7 @@ jobs:
       with:
         ref: 'main'
 
-    - name: Install silicon compiler
+    - name: Install silicon compiler as dscribed in: https://docs.siliconcompiler.com/en/stable/user_guide/installation.html
       run: |
         #sudo apt update                                                        # Update package information
         sudo apt install python3-dev python3-pip python3-venv                   # Install dependencies
@@ -27,3 +27,4 @@ jobs:
         source ./sc/bin/activate                                                # Active virtual env (bash/zsh)
         pip install --upgrade siliconcompiler                                   # Install SiliconCompiler in venv
         pip show siliconcompiler                                                # Display SiliconCompiler package information
+        python3 -c "import siliconcompiler;print(siliconcompiler.__version__)"  # Check version
