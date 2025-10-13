@@ -1,0 +1,27 @@
+# Test 2025-10-13 at 23:46:30
+
+name: Test
+run-name: dockerSiliconCompiler
+
+on:
+  push:
+    paths:
+      - '**/main.yml'
+
+jobs:
+
+  test:
+    permissions: write-all
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: 'main'
+
+    - name: Install silicon compiler
+      run: |
+        sudo apt update                                                         # Update package information
+        sudo apt install python3-dev python3-pip python3-venv                   # Install dependencies
+        python3 -m venv  ./sc                                                   # Create a virtual env
+        source ./sc/bin/activate                                                # Active virtual env (bash/zsh)
