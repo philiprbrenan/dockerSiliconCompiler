@@ -1,4 +1,4 @@
-# Test 2025-10-13 at 23:52:30
+# Test 2025-10-13 at 23:54:11
 
 name: Test
 run-name: dockerSiliconCompiler
@@ -31,4 +31,5 @@ jobs:
 
     - name: 'Install tools for ASIC flow as described in: https://docs.siliconcompiler.com/en/latest/reference_manual/apps.html#app-sc-install'
       run: |
+        source ./sc/bin/activate                                                # Active virtual env (bash/zsh)
         sc-install -group asic
