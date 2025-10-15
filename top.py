@@ -11,6 +11,7 @@ from siliconcompiler.tools.klayout import KLayoutLibrary
 
 from pathlib import Path
 from siliconcompiler import StdCellLibrary
+import pprint
 
 # Working directory
 workdir = "."
@@ -109,9 +110,11 @@ design_b = Design(B)
 design_b.set_dataroot(B, __file__)
 design_b.add_file(f"{B}.v", fileset='verilog')
 design_b.set_topmodule(B, fileset='verilog')
-ASIC.set('constraint', 'corearea', (1000, 1000))
 
 project_b = ASIC(design_b)
+project_b.constraint.area.set_diearea_rectangle(1000, 1000)
+#pprint.pprint(project_b.getdict())
+
 project_b.add_fileset(['verilog'])
 project_b.add_asiclib(ModA(project_a))
 skywater130_demo(project_b)
