@@ -1,4 +1,4 @@
-# Test 2025-10-16 at 00:35:16
+# Test 2025-10-16 at 00:39:59
 
 name: Test
 run-name: dockerSiliconCompiler
@@ -33,6 +33,7 @@ jobs:
 
     - name: Upload all files as artifact
       uses: actions/upload-artifact@v4
+      if: always()
       with:
         name: results
         path: .
