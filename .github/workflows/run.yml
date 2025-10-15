@@ -1,4 +1,4 @@
-# Test 2025-10-15 at 22:56:26
+# Test 2025-10-15 at 23:04:48
 
 name: Test
 run-name: dockerSiliconCompiler
@@ -19,13 +19,13 @@ jobs:
 
     - name: Code to execute in the docker container to place one synthesized module in another
       run: |
-        cat <<EOF > exec.sh
+        cat <<EOF > top.exec
         export PATH=/root/.local/bin:$PATH
         source /app/sc/bin/activate
         cd /workspace/verilog
         python3 top.py
         EOF
-        chmod +x exec.sh
+        chmod +x top.exec
 
     - name: Run Silicon compiler in a docker container
       run: |
