@@ -75,6 +75,13 @@ jobs:
     - name: Run Silicon compiler in a docker container
       run: |
         docker run --rm -v ".:/workspace/verilog" $docker bash -c "bash /workspace/verilog/top.exec"
+
+    - name: Upload all files as artifact
+      uses: actions/upload-artifact\@v4
+      with:
+        name: results
+        path: .
+        retention-days: 32
 END
 
 my $f = writeFileUsingSavedToken $user, $repo, $wf, $yml;                       # Upload workflow
