@@ -54,20 +54,21 @@ skywater130_demo(project_a)
 project_a.run()
 project_a.summary()
 
-class ModAB(YosysStdCellLibrary, OpenROADStdCellLibrary, KLayoutLibrary):
-  def __init__(self, modAb):
+class ModA(YosysStdCellLibrary, OpenROADStdCellLibrary, KLayoutLibrary):
+  def __init__(self, modA):
     super().__init__()
-    self.set_name("modAb")
+    self.set_name("modA") # I want to use A as the name but it conflicts with the existing A code
 
-    self.add_asic_pdk(modAb.get("asic", "pdk"))
+    self.add_asic_pdk(modA.get("asic", "pdk"))
 
     with self.active_fileset("models.physical"):
-      self.add_file(modAb.find_result("lef", step="write.views"))
-      self.add_file(modAb.find_result("gds", step="write.gds"))
+      self.add_file("./build/A/job0/write.views/0/outputs/A.lef")
+      self.add_file("./build/A/job0/write.views/0/outputs/A.slow.lib")
+      self.add_file("./build/A/job0/write.gds/0/outputs/A.gds")
       self.add_asic_aprfileset()
 
     with self.active_fileset("models.timing.nldm"):
-      self.add_file(modAb.find_result("lib", step="write.views"))
+      self.add_file("./build/A/job0/write.views/0/outputs/A.slow.lib")
       self.add_asic_libcornerfileset("generic", "nldm")
 
 # If needed:
@@ -111,7 +112,7 @@ design_b.set_topmodule(B, fileset='verilog')
 
 project_b = ASIC(design_b)
 project_b.add_fileset(['verilog'])
-project_b.add_asiclib(ModAB())
+project_b.add_asiclib(ModA(project_a))
 skywater130_demo(project_b)
 
 project_b.run()
