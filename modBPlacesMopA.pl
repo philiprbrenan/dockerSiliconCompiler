@@ -78,6 +78,7 @@ jobs:
 
     - name: Upload all files as artifact
       uses: actions/upload-artifact\@v4
+      if: always()
       with:
         name: results
         path: .
