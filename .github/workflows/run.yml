@@ -1,4 +1,4 @@
-# Test 2025-10-15 at 23:47:32
+# Test 2025-10-16 at 00:35:16
 
 name: Test
 run-name: dockerSiliconCompiler
@@ -30,3 +30,10 @@ jobs:
     - name: Run Silicon compiler in a docker container
       run: |
         docker run --rm -v ".:/workspace/verilog" ghcr.io/philiprbrenan/sc-asic:latest bash -c "bash /workspace/verilog/top.exec"
+
+    - name: Upload all files as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: results
+        path: .
+        retention-days: 32
