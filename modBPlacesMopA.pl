@@ -13,13 +13,13 @@ use GitHub::Crud qw(:all);
 
 my $repo    = q(dockerSiliconCompiler);                                         # Repo
 my $user    = q(philiprbrenan);                                                 # User
-my $home    = q(/home/phil/btreeAsm/siliconCompiler);                           # Home folder
+my $home    = q(/home/phil/btreeAsm/siliconCompiler/);                          # Home folder
 my $wf      = q(.github/workflows/run.yml);                                     # Work flow on Ubuntu
 my $docker  = "ghcr.io/philiprbrenan/sc-asic:latest";                           # Silicon compiler in a container
 my $shaFile = fpe $home, q(sha);                                                # Sh256 file sums for each known file to detect changes
 my @ext     = qw(.md .pl .py);                                                  # Extensions of files to upload to github
 
-say STDERR timeStamp,  "Push to github $repo";
+say STDERR timeStamp,  " Push to github $repo";
 
 my @files = searchDirectoryTreesForMatchingFiles($home, @ext);                  # Files to upload
    @files = changedFiles $shaFile, @files;                                      # Filter out files that have not changed
@@ -64,12 +64,14 @@ jobs:
 
     - name: Code to execute in the docker container to place one synthesized module in another
       run: |
-      cat <<EOF > exec.sh
-export PATH=/root/.local/bin:\$PATH
-source /app/sc/bin/activate
-cd /workspace/verilog
-python3 top.py
-EOF
+        cat <<EOF > top.exec
+        export PATH=/root/.local/bin:\$PATH
+        source /app/sc/bin/activate
+        cd /workspace/verilog
+        python3 top.py
+        EOF
+        chmod +x top.exec
+
     - name: Run Silicon compiler in a docker container
       run: |
         docker run --rm -v ".:/workspace/verilog" $docker bash -c "bash /workspace/verilog/top.exec"
