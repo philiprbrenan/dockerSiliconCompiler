@@ -21,9 +21,9 @@ os.makedirs(workdir, exist_ok=True)
 verilog_a = """
 module A(
     input  wire       clk,
-    input  wire[31:0] a,
-    input  wire[31:0] b,
-    output reg [31:0] y
+    input  wire[7:0] a,
+    input  wire[7:0] b,
+    output reg [7:0] y
 );
 
   always @ (posedge clk) begin
@@ -85,12 +85,12 @@ class ModA(YosysStdCellLibrary, OpenROADStdCellLibrary, KLayoutLibrary):
 verilog_b = """
 module B(
     input  wire       clk,
-    input  wire[31:0] a1,
-    input  wire[31:0] b1,
-    input  wire[31:0] a2,
-    input  wire[31:0] b2,
-    output reg[31:0] y1,
-    output reg[31:0] y2
+    input  wire[7:0] a1,
+    input  wire[7:0] b1,
+    input  wire[7:0] a2,
+    input  wire[7:0] b2,
+    output reg[7:0] y1,
+    output reg[7:0] y2
 );
     // Instantiate module A twice as hard macros
 
@@ -112,7 +112,8 @@ design_b.add_file(f"{B}.v", fileset='verilog')
 design_b.set_topmodule(B, fileset='verilog')
 
 project_b = ASIC(design_b)
-project_b.constraint.area.set_diearea_rectangle(1000, 1000)
+project_b.constraint.area.set_corearea_rectangle(230,  230, (20, 20))
+project_b.constraint.area.set_diearea_rectangle(260, 260)
 #pprint.pprint(project_b.getdict())
 
 project_b.add_fileset(['verilog'])
