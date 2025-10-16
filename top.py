@@ -112,8 +112,8 @@ design_b.add_file(f"{B}.v", fileset='verilog')
 design_b.set_topmodule(B, fileset='verilog')
 
 project_b = ASIC(design_b)
-project_b.constraint.area.set_corearea_rectangle(230,  230, (20, 20))
-project_b.constraint.area.set_diearea_rectangle(260, 260)
+project_b.constraint.area.set_corearea_rectangle(450,  450, (20, 20))
+project_b.constraint.area.set_diearea_rectangle(500, 500)
 #pprint.pprint(project_b.getdict())
 
 project_b.add_fileset(['verilog'])
